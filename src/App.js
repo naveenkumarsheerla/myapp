@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+
+import {  RouterProvider,  createBrowserRouter, } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 import './App.css';
+import { DisplayData } from './commponent/Displaydata';
+import {  useState } from "react";
+import { CardInfo } from "./commponent/Card";
+import { Store } from "./commponent/Store";
+import { MainPage } from "./commponent/MainPage";
+
+
 
 function App() {
+  const [data, setData] = useState(Store)
+
+  const router = createBrowserRouter([
+    {
+      path:'/',
+      element:<MainPage items={data}/>
+    },
+    {
+       path:'/:name',
+       element:<DisplayData items={data} />,
+    },
+    {
+      path:'/:name/:id',
+      element:<CardInfo data={data} />
+    }
+  ])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  //  <Routes>
+  //   <Route path="/" element={<DisplayData items={data} /> } />
+  //   <Route path="/:id" element={<CardInfo data={data} />} />
+  //  </Routes>
+
+  <RouterProvider router={router}/>
+
   );
 }
 
